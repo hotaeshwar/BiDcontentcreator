@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiD Content Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * { font-family: 'Poppins', sans-serif; }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #60a5fa, #a78bfa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .spinner {
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #3b82f6;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        .btn-success:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-1px);
+        }
+        
+        .btn-purple {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+        
+        .btn-purple:hover {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            transform: translateY(-1px);
+        }
+
+        .festival-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="text-white">
+    <div class="container mx-auto px-4 py-6">
+        <div class="max-w-7xl mx-auto">
+            <header class="text-center mb-8">
+                <div class="flex items-center justify-center mb-6">
+                    <img 
+                        src="https://www.buildingindiadigital.com/assets/bid-logo-CiGxyqi9.png" 
+                        alt="BiD Logo" 
+                        class="w-14 h-14 mr-4 object-contain bg-white rounded-xl p-2"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
+                    <div class="w-14 h-14 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4 hidden">
+                        <span class="font-bold text-xl text-white">BiD</span>
+                    </div>
+                    <h1 class="text-5xl font-bold gradient-text">Content Generator</h1>
+                </div>
+                <p class="text-gray-300 text-xl max-w-3xl mx-auto leading-relaxed">
+                    Professional AI-powered content creation with festival & event support
+                </p>
+                <div class="mt-4 flex justify-center items-center space-x-6 text-sm text-gray-400">
+                    <span class="flex items-center">
+                        <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                        Gemini AI Powered
+                    </span>
+                    <span class="flex items-center">
+                        <div class="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></div>
+                        Smart Regeneration
+                    </span>
+                    <span class="flex items-center">
+                        <div class="w-2 h-2 bg-purple-500 rounded-full mr-2 animate-pulse"></div>
+                        Festival Ready
+                    </span>
+                </div>
+            </header>
+
+            <div class="grid lg:grid-cols-5 gap-8">
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="glass-card rounded-3xl p-8">
+                        <h2 class="text-2xl font-bold mb-6 text-blue-400 flex items-center">
+                            <span class="mr-3">🎯</span>
+                            Content Creator
+                        </h2>
+                        
+                        <div class="mb-6">
+                            <label class="block text-sm font-semibold text-gray-200 mb-3">
+                                What's your content about?
+                            </label>
+                            <textarea 
+                                id="contentTopic" 
+                                placeholder="Enter your topic, story, or idea..."
+                                class="w-full px-5 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-white placeholder-gray-400 resize-none transition-all"
+                                rows="4"
+                            ></textarea>
+                            <div class="mt-2 text-xs text-gray-400 text-right">
+                                <span id="charCount">0</span>/500 characters
+                            </div>
+                        </div>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-200 mb-3">Category</label>
+                                <select id="categorySelect" class="w-full px-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:border-blue-500 text-white transition-all">
+                                    <option value="business" class="bg-gray-800">Business & Professional</option>
+                                    <option value="lifestyle" class="bg-gray-800">Lifestyle & Personal</option>
+                                    <option value="gaming" class="bg-gray-800">Gaming & Esports</option>
+                                    <option value="technology" class="bg-gray-800">Technology & Innovation</option>
+                                    <option value="marketing" class="bg-gray-800">Marketing & Sales</option>
+                                    <option value="motivational" class="bg-gray-800">Motivational & Inspirational</option>
+                                    <option value="entertainment" class="bg-gray-800">Entertainment & Media</option>
+                                    <option value="food" class="bg-gray-800">Food & Dining</option>
+                                    <option value="travel" class="bg-gray-800">Travel & Adventure</option>
+                                    <option value="fitness" class="bg-gray-800">Fitness & Health</option>
+                                    <option value="education" class="bg-gray-800">Education & Learning</option>
+                                    <option value="creative" class="bg-gray-800">Creative & Artistic</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-200 mb-3">Visual Style</label>
+                                <select id="visualStyle" class="w-full px-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:border-purple-500 text-white transition-all">
+                                    <option value="modern" class="bg-gray-800">Modern & Clean</option>
+                                    <option value="photorealistic" class="bg-gray-800">Photorealistic</option>
+                                    <option value="artistic" class="bg-gray-800">Artistic & Creative</option>
+                                    <option value="minimalist" class="bg-gray-800">Minimalist Design</option>
+                                    <option value="vibrant" class="bg-gray-800">Vibrant & Colorful</option>
+                                    <option value="professional" class="bg-gray-800">Corporate Professional</option>
+                                    <option value="retro" class="bg-gray-800">Retro & Vintage</option>
+                                    <option value="futuristic" class="bg-gray-800">Futuristic & Sci-Fi</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-6 border-2 border-yellow-500/50 rounded-2xl p-4 bg-yellow-500/10">
+                            <label class="block text-sm font-semibold text-yellow-300 mb-3 flex items-center">
+                                🎉 Festival / Special Event
+                                <span class="festival-badge">NEW</span>
+                            </label>
+                            <select id="festivalSelect" class="w-full px-4 py-3 bg-white/10 border-2 border-yellow-500/50 rounded-xl focus:border-yellow-500 text-white transition-all text-base">
+                                <option value="none" class="bg-gray-800">🔹 None - Regular Content</option>
+                                <optgroup label="🇮🇳 Indian Festivals" class="bg-gray-800">
+                                    <option value="diwali" class="bg-gray-800">🪔 Diwali - Festival of Lights</option>
+                                    <option value="holi" class="bg-gray-800">🎨 Holi - Festival of Colors</option>
+                                    <option value="navratri" class="bg-gray-800">💃 Navratri & Durga Puja</option>
+                                    <option value="ganesh-chaturthi" class="bg-gray-800">🙏 Ganesh Chaturthi</option>
+                                    <option value="raksha-bandhan" class="bg-gray-800">💕 Raksha Bandhan</option>
+                                    <option value="janmashtami" class="bg-gray-800">🎵 Janmashtami</option>
+                                    <option value="eid" class="bg-gray-800">🌙 Eid-ul-Fitr & Eid-ul-Adha</option>
+                                    <option value="pongal" class="bg-gray-800">🌾 Pongal & Makar Sankranti</option>
+                                    <option value="onam" class="bg-gray-800">🌺 Onam</option>
+                                    <option value="baisakhi" class="bg-gray-800">🌾 Baisakhi & Vishu</option>
+                                    <option value="republic-day" class="bg-gray-800">🇮🇳 Republic Day (26 Jan)</option>
+                                    <option value="independence-day" class="bg-gray-800">🇮🇳 Independence Day (15 Aug)</option>
+                                </optgroup>
+                                <optgroup label="🌍 International Events" class="bg-gray-800">
+                                    <option value="christmas" class="bg-gray-800">🎄 Christmas</option>
+                                    <option value="new-year" class="bg-gray-800">🎉 New Year</option>
+                                    <option value="halloween" class="bg-gray-800">🎃 Halloween</option>
+                                    <option value="thanksgiving" class="bg-gray-800">🦃 Thanksgiving</option>
+                                    <option value="valentines" class="bg-gray-800">❤️ Valentine's Day</option>
+                                    <option value="easter" class="bg-gray-800">🐰 Easter</option>
+                                    <option value="black-friday" class="bg-gray-800">🛍️ Black Friday / Cyber Monday</option>
+                                    <option value="mothers-day" class="bg-gray-800">👩 Mother's Day</option>
+                                    <option value="fathers-day" class="bg-gray-800">👨 Father's Day</option>
+                                    <option value="earth-day" class="bg-gray-800">🌍 Earth Day</option>
+                                    <option value="womens-day" class="bg-gray-800">👩‍💼 International Women's Day</option>
+                                    <option value="pride" class="bg-gray-800">🏳️‍🌈 Pride Month</option>
+                                </optgroup>
+                            </select>
+                            <p class="text-xs text-yellow-200/70 mt-2">Select a festival to generate themed content automatically</p>
+                        </div>
+
+                        <div class="mb-8">
+                            <label class="block text-sm font-semibold text-gray-200 mb-4">Content Options</label>
+                            <div class="grid grid-cols-2 gap-4">
+                                <label class="flex items-center text-sm text-gray-200 cursor-pointer p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                                    <input type="checkbox" id="includeHashtags" checked class="mr-3 text-blue-500 focus:ring-blue-500 rounded">
+                                    <span>📱 Hashtags</span>
+                                </label>
+                                <label class="flex items-center text-sm text-gray-200 cursor-pointer p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                                    <input type="checkbox" id="includeEmojis" checked class="mr-3 text-blue-500 focus:ring-blue-500 rounded">
+                                    <span>😊 Emojis</span>
+                                </label>
+                                <label class="flex items-center text-sm text-gray-200 cursor-pointer p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                                    <input type="checkbox" id="includeCTA" class="mr-3 text-blue-500 focus:ring-blue-500 rounded">
+                                    <span>📢 Call-to-Action</span>
+                                </label>
+                                <label class="flex items-center text-sm text-gray-200 cursor-pointer p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-all">
+                                    <input type="checkbox" id="viralMode" class="mr-3 text-blue-500 focus:ring-blue-500 rounded">
+                                    <span>🚀 Viral Boost</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <button 
+                                id="generateCaptionBtn" 
+                                class="w-full btn-success text-white font-bold py-5 px-8 rounded-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg"
+                            >
+                                <span class="mr-3 text-xl">📝</span>
+                                <span id="captionBtnText">Generate Caption</span>
+                                <div id="captionSpinner" class="spinner ml-3 hidden"></div>
+                            </button>
+                            
+                            <button 
+                                id="generateImageBtn" 
+                                class="w-full btn-purple text-white font-bold py-5 px-8 rounded-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg"
+                            >
+                                <span class="mr-3 text-xl">🎨</span>
+                                <span id="imageBtnText">Generate Image</span>
+                                <div id="imageSpinner" class="spinner ml-3 hidden"></div>
+                            </button>
+
+                            <button 
+                                id="generateBothBtn" 
+                                class="w-full btn-primary text-white font-bold py-5 px-8 rounded-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg"
+                            >
+                                <span class="mr-3 text-xl">✨</span>
+                                <span id="bothBtnText">Generate Both</span>
+                                <div id="bothSpinner" class="spinner ml-3 hidden"></div>
+                            </button>
+                        </div>
+
+                        <div class="mt-6">
+                            <label class="block text-sm font-semibold text-gray-200 mb-3">Quick Start Topics</label>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button id="quickGaming" class="glass-card hover:bg-white/20 text-white py-3 px-3 rounded-lg text-xs font-medium transition-all">
+                                    🎮 Gaming
+                                </button>
+                                <button id="quickTech" class="glass-card hover:bg-white/20 text-white py-3 px-3 rounded-lg text-xs font-medium transition-all">
+                                    💻 Tech
+                                </button>
+                                <button id="quickBusiness" class="glass-card hover:bg-white/20 text-white py-3 px-3 rounded-lg text-xs font-medium transition-all">
+                                    💼 Business
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3 space-y-6">
+                    <div id="captionPanel" class="glass-card rounded-3xl p-8 hidden">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-bold text-green-400 flex items-center">
+                                <span class="mr-3 text-2xl">📝</span>
+                                Generated Caption
+                            </h3>
+                            <div class="flex gap-3">
+                                <button id="copyCaptionBtn" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                    📋 Copy
+                                </button>
+                                <button id="regenCaptionBtn" class="bg-green-500/20 hover:bg-green-500/30 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                    🔄 Regenerate
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="captionContent" class="bg-white/5 rounded-2xl p-6 text-gray-100 leading-relaxed min-h-[140px] border-l-4 border-green-400 text-lg"></div>
+                        
+                        <div class="flex justify-between text-xs text-gray-400 mt-4">
+                            <span id="captionStats">Ready to generate</span>
+                            <span id="captionTime"></span>
+                        </div>
+                    </div>
+
+                    <div id="imagePanel" class="glass-card rounded-3xl p-8 hidden">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-2xl font-bold text-purple-400 flex items-center">
+                                <span class="mr-3 text-2xl">🎨</span>
+                                Generated Image
+                            </h3>
+                            <div class="flex gap-3">
+                                <button id="downloadImageBtn" class="bg-white/20 hover:bg-white/30 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                    💾 Download
+                                </button>
+                                <button id="regenImageBtn" class="bg-purple-500/20 hover:bg-purple-500/30 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                                    🔄 Regenerate
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="imageContainer" class="bg-white/5 rounded-2xl p-6 min-h-[400px] flex items-center justify-center border-l-4 border-purple-400">
+                            <div id="imagePlaceholder" class="text-center">
+                                <div class="text-7xl mb-4">🎨</div>
+                                <p class="text-gray-400 text-lg">Your AI-generated image will appear here</p>
+                            </div>
+                            <img id="generatedImage" class="max-w-full h-auto rounded-xl shadow-2xl hidden" alt="AI Generated Content">
+                        </div>
+                        
+                        <div class="flex justify-between text-xs text-gray-400 mt-4">
+                            <span id="imageStats">Ready to generate</span>
+                            <span id="imageTime"></span>
+                        </div>
+                    </div>
+
+                    <div id="welcomeScreen" class="glass-card rounded-3xl p-12 text-center">
+                        <div class="text-8xl mb-8">🚀</div>
+                        <h3 class="text-3xl font-bold mb-6 gradient-text">Ready to Create Amazing Content?</h3>
+                        <p class="text-gray-300 mb-8 text-lg max-w-2xl mx-auto leading-relaxed">
+                            Enter your content idea and let our advanced AI create professional captions and stunning visuals. 
+                            Now with Indian festival and international event support!
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-base">
+                            <div class="flex flex-col items-center p-4 rounded-xl bg-white/5">
+                                <span class="text-3xl mb-2">⚡</span>
+                                <span class="font-semibold">Lightning Fast</span>
+                            </div>
+                            <div class="flex flex-col items-center p-4 rounded-xl bg-white/5">
+                                <span class="text-3xl mb-2">🎯</span>
+                                <span class="font-semibold">Highly Targeted</span>
+                            </div>
+                            <div class="flex flex-col items-center p-4 rounded-xl bg-white/5">
+                                <span class="text-3xl mb-2">🎉</span>
+                                <span class="font-semibold">Festival Ready</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorDisplay" class="mt-8 bg-red-500/20 border-2 border-red-500/30 rounded-2xl p-6 hidden">
+                <div class="flex items-center">
+                    <span class="text-red-400 mr-4 text-3xl">⚠️</span>
+                    <div>
+                        <h4 class="text-red-300 font-bold text-lg">Error Occurred</h4>
+                        <p id="errorMessage" class="text-red-200 mt-2"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer" class="fixed top-6 right-6 z-50 space-y-3"></div>
+
+    <script>
+        class BiDContentGenerator {
+            constructor() {
+                this.apiKey = 'AIzaSyDZPr4b9axS076-arb_PAVtvw0e5FdSEd0';
+                this.imageApiBase = 'https://image.pollinations.ai/prompt/';
+                
+                this.currentCaption = '';
+                this.currentImageUrl = '';
+                this.generationCount = 0;
+                this.regenerationCount = 0;
+                this.usedTemplateIndices = new Set();
+                
+                this.isGeneratingCaption = false;
+                this.isGeneratingImage = false;
+                this.isGeneratingBoth = false;
+                
+                this.initializeApp();
+            }
+
+            initializeApp() {
+                this.setupEventListeners();
+                this.setupCharacterCounter();
+                this.showWelcomeMessage();
+            }
+
+            setupEventListeners() {
+                document.getElementById('generateCaptionBtn').addEventListener('click', () => this.generateCaption(false));
+                document.getElementById('generateImageBtn').addEventListener('click', () => this.generateImage(false));
+                document.getElementById('generateBothBtn').addEventListener('click', () => this.generateBoth());
+                
+                document.getElementById('regenCaptionBtn').addEventListener('click', () => this.generateCaption(true));
+                document.getElementById('regenImageBtn').addEventListener('click', () => this.generateImage(true));
+                
+                document.getElementById('copyCaptionBtn').addEventListener('click', () => this.copyCaption());
+                document.getElementById('downloadImageBtn').addEventListener('click', () => this.downloadImage());
+
+                document.getElementById('quickGaming').addEventListener('click', () => this.setQuickTopic('gaming'));
+                document.getElementById('quickTech').addEventListener('click', () => this.setQuickTopic('tech'));
+                document.getElementById('quickBusiness').addEventListener('click', () => this.setQuickTopic('business'));
+
+                document.getElementById('contentTopic').focus();
+            }
+
+            setupCharacterCounter() {
+                const input = document.getElementById('contentTopic');
+                const counter = document.getElementById('charCount');
+                
+                input.addEventListener('input', (e) => {
+                    const length = e.target.value.length;
+                    counter.textContent = length;
+                    counter.style.color = length > 400 ? '#ef4444' : length > 300 ? '#f59e0b' : '#9ca3af';
+                });
+            }
+
+            getFestivalData(festival) {
+                const festivals = {
+                    'diwali': {
+                        templates: [
+                            'Lighting up {{topic}} this Diwali with joy and prosperity',
+                            'May {{topic}} bring endless light into your celebrations',
+                            'This Festival of Lights, {{topic}} shines brighter than ever',
+                            'Celebrating {{topic}} with diyas, sweets, and endless blessings',
+                            'Diwali vibes with {{topic}} - spreading light and happiness everywhere'
+                        ],
+                        emojis: ['🪔', '✨', '🎆', '🎇', '💫', '🌟'],
+                        hashtags: ['#Diwali', '#FestivalOfLights', '#DiwaliCelebration', '#HappyDiwali', '#DiwaliVibes', '#IndianFestival'],
+                        imageKeywords: 'diwali lights, diyas, rangoli, fireworks, indian festival celebration'
+                    },
+                    'holi': {
+                        templates: [
+                            'Splashing colors of joy with {{topic}} this Holi',
+                            '{{topic}} gets a vibrant makeover this Festival of Colors',
+                            'Celebrating {{topic}} with colors, music, and pure happiness',
+                            'Let {{topic}} paint your Holi celebrations with beautiful memories',
+                            'Holi hai! {{topic}} brings the perfect blend of fun and tradition'
+                        ],
+                        emojis: ['🎨', '🌈', '💚', '💙', '❤️', '💛'],
+                        hashtags: ['#Holi', '#FestivalOfColors', '#HoliCelebration', '#HappyHoli', '#ColorFestival', '#HoliVibes'],
+                        imageKeywords: 'holi colors, color powder, spring festival, vibrant celebration'
+                    },
+                    'navratri': {
+                        templates: [
+                            'Dancing to the rhythm of {{topic}} this Navratri',
+                            'Nine nights of devotion and {{topic}} celebration',
+                            '{{topic}} takes center stage in our Garba celebrations',
+                            'Celebrating {{topic}} with dandiya, devotion, and joy',
+                            'Navratri vibes with {{topic}} - tradition meets celebration'
+                        ],
+                        emojis: ['💃', '🎵', '🙏', '✨', '🌺', '🎉'],
+                        hashtags: ['#Navratri', '#Garba', '#DurgaPuja', '#NavaratriCelebration', '#IndianFestival', '#GarbaNight'],
+                        imageKeywords: 'navratri garba, traditional dance, durga puja, indian celebration'
+                    },
+                    'ganesh-chaturthi': {
+                        templates: [
+                            'Welcoming Lord Ganesha and {{topic}} with open hearts',
+                            '{{topic}} gets divine blessings this Ganesh Chaturthi',
+                            'Ganpati Bappa Morya! Celebrating {{topic}} with devotion',
+                            'New beginnings with {{topic}} and Ganesh Chaturthi blessings',
+                            'May {{topic}} bring prosperity like Lord Ganesha promises'
+                        ],
+                        emojis: ['🙏', '🐘', '✨', '🌺', '🎉', '🪔'],
+                        hashtags: ['#GaneshChaturthi', '#GanpatiBappaMorya', '#Ganpati', '#IndianFestival', '#GaneshFestival'],
+                        imageKeywords: 'ganesh idol, ganpati celebration, indian festival, devotional'
+                    },
+                    'raksha-bandhan': {
+                        templates: [
+                            'Celebrating the beautiful bond of {{topic}} this Raksha Bandhan',
+                            'Tying threads of love with {{topic}} this festive season',
+                            '{{topic}} makes sibling bonds even more special this Rakhi',
+                            'Protecting what matters - {{topic}} and family bonds this Raksha Bandhan',
+                            'Rakhi celebrations with {{topic}} - love, protection, and togetherness'
+                        ],
+                        emojis: ['💕', '🎀', '👫', '❤️', '✨', '🎁'],
+                        hashtags: ['#RakshaBandhan', '#Rakhi', '#SiblingLove', '#FamilyBond', '#IndianFestival', '#RakhiCelebration'],
+                        imageKeywords: 'rakhi thread, sibling bond, family celebration, traditional festival'
+                    },
+                    'janmashtami': {
+                        templates: [
+                            'Celebrating {{topic}} with divine Krishna blessings this Janmashtami',
+                            'Dahi Handi and {{topic}} - perfect Janmashtami celebrations',
+                            '{{topic}} brings joy like little Krishna this festive season',
+                            'May {{topic}} be blessed with Krishna\'s wisdom and playfulness',
+                            'Janmashtami vibes with {{topic}} - devotion meets celebration'
+                        ],
+                        emojis: ['🎵', '🪈', '🙏', '✨', '💙', '🎉'],
+                        hashtags: ['#Janmashtami', '#KrishnaBirthday', '#DahiHandi', '#IndianFestival', '#JaiShreeKrishna'],
+                        imageKeywords: 'krishna janmashtami, dahi handi, indian festival, devotional celebration'
+                    },
+                    'eid': {
+                        templates: [
+                            'Eid Mubarak! Celebrating {{topic}} with prayers and gratitude',
+                            '{{topic}} brings joy and blessings this Eid celebration',
+                            'May {{topic}} shine bright this Eid with love and togetherness',
+                            'Celebrating {{topic}} with family, feast, and Eid blessings',
+                            'Eid festivities with {{topic}} - spreading peace and happiness'
+                        ],
+                        emojis: ['🌙', '⭐', '🕌', '🙏', '✨', '💚'],
+                        hashtags: ['#EidMubarak', '#Eid', '#EidCelebration', '#IslamicFestival', '#EidAlFitr', '#Blessed'],
+                        imageKeywords: 'eid celebration, islamic festival, family gathering, festive prayers'
+                    },
+                    'pongal': {
+                        templates: [
+                            'Harvesting happiness with {{topic}} this Pongal celebration',
+                            '{{topic}} brings prosperity like the harvest this Pongal',
+                            'Pongalo Pongal! Celebrating {{topic}} with gratitude and joy',
+                            'Traditional vibes with {{topic}} this Tamil harvest festival',
+                            'May {{topic}} overflow with blessings like the Pongal pot'
+                        ],
+                        emojis: ['🌾', '🍚', '☀️', '🎉', '✨', '🙏'],
+                        hashtags: ['#Pongal', '#HarvestFestival', '#TamilFestival', '#MakarSankranti', '#IndianFestival'],
+                        imageKeywords: 'pongal harvest, tamil festival, sankranti celebration, traditional'
+                    },
+                    'onam': {
+                        templates: [
+                            'Celebrating {{topic}} with Onam\'s vibrant spirit and tradition',
+                            'Pookalam and {{topic}} - perfect Onam celebration blend',
+                            '{{topic}} shines in Kerala\'s grandest festival celebrations',
+                            'Onam Sadya and {{topic}} - a feast of joy and culture',
+                            'May {{topic}} bring prosperity like King Mahabali\'s return'
+                        ],
+                        emojis: ['🌺', '🌼', '🍛', '🎉', '✨', '🙏'],
+                        hashtags: ['#Onam', '#KeralaCelebration', '#Pookalam', '#OnamSadya', '#IndianFestival'],
+                        imageKeywords: 'onam celebration, kerala festival, pookalam flowers, traditional sadya'
+                    },
+                    'baisakhi': {
+                        templates: [
+                            'Harvesting joy with {{topic}} this Baisakhi celebration',
+                            '{{topic}} gets the Punjabi celebration treatment this Baisakhi',
+                            'Baisakhi vibes with {{topic}} - prosperity and new beginnings',
+                            'Celebrating {{topic}} with dhol beats and Baisakhi spirit',
+                            'May {{topic}} bring abundance like the spring harvest'
+                        ],
+                        emojis: ['🌾', '🥁', '🎉', '✨', '💛', '🙏'],
+                        hashtags: ['#Baisakhi', '#Vaisakhi', '#HarvestFestival', '#PunjabiFestival', '#IndianFestival'],
+                        imageKeywords: 'baisakhi harvest, punjabi festival, sikh celebration, spring festival'
+                    },
+                    'republic-day': {
+                        templates: [
+                            'Celebrating {{topic}} with pride this Republic Day',
+                            '{{topic}} represents the spirit of our great nation',
+                            'Republic Day pride with {{topic}} - honoring our Constitution',
+                            'Jai Hind! {{topic}} celebrates Indian values and unity',
+                            'Patriotic vibes with {{topic}} this 26th January'
+                        ],
+                        emojis: ['🇮🇳', '🎖️', '✨', '🎉', '💪', '🙏'],
+                        hashtags: ['#RepublicDay', '#IndiaRepublicDay', '#JaiHind', '#ProudIndian', '#26January'],
+                        imageKeywords: 'republic day india, national celebration, patriotic, tricolor flag'
+                    },
+                    'independence-day': {
+                        templates: [
+                            'Freedom and {{topic}} - celebrating Independence Day with pride',
+                            '{{topic}} honors the spirit of our freedom fighters',
+                            '75+ years of independence with {{topic}} leading the way',
+                            'Jai Hind! {{topic}} celebrates Indian independence and unity',
+                            'Tricolor pride with {{topic}} this Independence Day'
+                        ],
+                        emojis: ['🇮🇳', '🎖️', '✨', '🎉', '💪', '🙏'],
+                        hashtags: ['#IndependenceDay', '#15August', '#JaiHind', '#ProudIndian', '#IndianFreedom'],
+                        imageKeywords: 'independence day india, tricolor flag, freedom celebration, national pride'
+                    },
+                    'christmas': {
+                        templates: [
+                            'Merry Christmas! {{topic}} brings festive cheer and joy',
+                            '{{topic}} under the Christmas tree - perfect holiday vibes',
+                            'Celebrating {{topic}} with bells, lights, and Christmas magic',
+                            'Ho ho ho! {{topic}} makes this Christmas extra special',
+                            'Christmas joy with {{topic}} - spreading love and warmth'
+                        ],
+                        emojis: ['🎄', '🎅', '🎁', '⭐', '❄️', '✨'],
+                        hashtags: ['#Christmas', '#MerryChristmas', '#ChristmasVibes', '#HolidaySeason', '#XmasCelebration'],
+                        imageKeywords: 'christmas celebration, holiday season, christmas tree, festive decorations'
+                    },
+                    'new-year': {
+                        templates: [
+                            'New year, new beginnings with {{topic}} leading the way',
+                            '{{topic}} makes this New Year celebration unforgettable',
+                            'Cheers to {{topic}} and fresh starts this New Year',
+                            'Counting down to {{topic}} excellence in 2025',
+                            '365 new days with {{topic}} - ready for amazing adventures'
+                        ],
+                        emojis: ['🎉', '🥳', '✨', '🎊', '🌟', '💫'],
+                        hashtags: ['#NewYear', '#HappyNewYear', '#NewBeginnings', '#2025Goals', '#NewYearVibes'],
+                        imageKeywords: 'new year celebration, countdown party, fireworks, fresh start'
+                    },
+                    'halloween': {
+                        templates: [
+                            'Spooky {{topic}} vibes this Halloween night',
+                            'Trick or treat with {{topic}} - Halloween fun awaits',
+                            '{{topic}} gets a spooky makeover for Halloween celebrations',
+                            'Boo! {{topic}} brings the perfect Halloween thrills',
+                            'Halloween magic with {{topic}} - costumes, candy, and fun'
+                        ],
+                        emojis: ['🎃', '👻', '🦇', '🕷️', '🍬', '🌙'],
+                        hashtags: ['#Halloween', '#SpookySeason', '#TrickOrTreat', '#HalloweenVibes', '#Spooky'],
+                        imageKeywords: 'halloween costumes, spooky celebration, pumpkins, trick or treat'
+                    },
+                    'thanksgiving': {
+                        templates: [
+                            'Grateful for {{topic}} this Thanksgiving celebration',
+                            '{{topic}} tops our thankfulness list this holiday season',
+                            'Thanksgiving feast with {{topic}} - counting our blessings',
+                            'Giving thanks for {{topic}} and all the good things',
+                            'Turkey, family, and {{topic}} - perfect Thanksgiving combo'
+                        ],
+                        emojis: ['🦃', '🍂', '🥧', '🙏', '❤️', '✨'],
+                        hashtags: ['#Thanksgiving', '#Thankful', '#GivingThanks', '#ThanksgivingDinner', '#Gratitude'],
+                        imageKeywords: 'thanksgiving dinner, family gathering, gratitude celebration, autumn feast'
+                    },
+                    'valentines': {
+                        templates: [
+                            'Love is in the air with {{topic}} this Valentine\'s Day',
+                            '{{topic}} makes hearts flutter this romantic season',
+                            'Celebrating {{topic}} with love and sweet moments',
+                            'Valentine vibes with {{topic}} - spreading love everywhere',
+                            'My Valentine pick? Definitely {{topic}} all the way'
+                        ],
+                        emojis: ['❤️', '💕', '💝', '🌹', '💑', '✨'],
+                        hashtags: ['#ValentinesDay', '#Love', '#Valentine', '#Romance', '#LoveIsInTheAir'],
+                        imageKeywords: 'valentine celebration, romantic moments, hearts and flowers, love day'
+                    },
+                    'easter': {
+                        templates: [
+                            'Hopping into {{topic}} this Easter celebration',
+                            '{{topic}} brings spring joy and Easter blessings',
+                            'Easter egg hunt? Try discovering {{topic}} instead',
+                            'Celebrating {{topic}} with Easter cheer and renewal',
+                            'Spring has sprung with {{topic}} leading Easter festivities'
+                        ],
+                        emojis: ['🐰', '🥚', '🌷', '🌼', '✨', '🎉'],
+                        hashtags: ['#Easter', '#EasterSunday', '#SpringCelebration', '#EasterVibes', '#HappyEaster'],
+                        imageKeywords: 'easter celebration, spring festival, easter eggs, bunny decorations'
+                    },
+                    'black-friday': {
+                        templates: [
+                            'Black Friday steal: {{topic}} at unbeatable value',
+                            'The best deal today? Definitely {{topic}} hands down',
+                            '{{topic}} makes this Black Friday shopping spree worth it',
+                            'Cyber Monday? More like {{topic}} Monday perfection',
+                            'Shopping smart with {{topic}} this Black Friday bonanza'
+                        ],
+                        emojis: ['🛍️', '💰', '🎉', '⚡', '💳', '✨'],
+                        hashtags: ['#BlackFriday', '#BlackFridayDeals', '#CyberMonday', '#ShoppingDeals', '#BigSale'],
+                        imageKeywords: 'black friday sale, shopping deals, discount shopping, cyber monday'
+                    },
+                    'mothers-day': {
+                        templates: [
+                            'Celebrating amazing moms and {{topic}} this Mother\'s Day',
+                            '{{topic}} honors the superheroes we call Mom',
+                            'Thank you, Mom, for everything including {{topic}} support',
+                            'Mother\'s Day tribute with {{topic}} appreciation and love',
+                            'To all the incredible moms out there embracing {{topic}}'
+                        ],
+                        emojis: ['👩', '💐', '❤️', '🌸', '✨', '🙏'],
+                        hashtags: ['#MothersDay', '#MomLove', '#ThankYouMom', '#MothersDay2025', '#MomAppreciation'],
+                        imageKeywords: 'mothers day celebration, mom appreciation, family love, motherhood tribute'
+                    },
+                    'fathers-day': {
+                        templates: [
+                            'Cheers to all dads and {{topic}} this Father\'s Day',
+                            '{{topic}} celebrates the heroes we call Dad today',
+                            'Thank you, Dad, for inspiring {{topic}} excellence',
+                            'Father\'s Day pride with {{topic}} appreciation and respect',
+                            'To every amazing dad supporting {{topic}} journeys'
+                        ],
+                        emojis: ['👨', '👔', '❤️', '🎁', '✨', '🙏'],
+                        hashtags: ['#FathersDay', '#DadLove', '#ThankYouDad', '#FathersDay2025', '#DadAppreciation'],
+                        imageKeywords: 'fathers day celebration, dad appreciation, family tribute, fatherhood honor'
+                    },
+                    'earth-day': {
+                        templates: [
+                            'Protecting our planet with {{topic}} this Earth Day',
+                            '{{topic}} joins the fight for environmental sustainability',
+                            'Earth Day commitment: {{topic}} goes green for the planet',
+                            'Celebrating {{topic}} and our beautiful Earth today',
+                            'Climate action through {{topic}} - every day is Earth Day'
+                        ],
+                        emojis: ['🌍', '🌱', '♻️', '💚', '🌳', '✨'],
+                        hashtags: ['#EarthDay', '#ClimateAction', '#Sustainability', '#SaveThePlanet', '#GoGreen'],
+                        imageKeywords: 'earth day celebration, environmental awareness, sustainability, green planet'
+                    },
+                    'womens-day': {
+                        templates: [
+                            'Celebrating strong women and {{topic}} this International Women\'s Day',
+                            '{{topic}} honors female empowerment and equality today',
+                            'Women\'s Day tribute with {{topic}} celebrating achievements',
+                            'To all phenomenal women driving {{topic}} forward',
+                            'Girl power and {{topic}} excellence this Women\'s Day'
+                        ],
+                        emojis: ['👩‍💼', '💪', '✨', '🌟', '❤️', '🙌'],
+                        hashtags: ['#WomensDay', '#InternationalWomensDay', '#WomenEmpowerment', '#GirlPower', '#IWD2025'],
+                        imageKeywords: 'womens day celebration, female empowerment, gender equality, women achievements'
+                    },
+                    'pride': {
+                        templates: [
+                            'Love is love, and {{topic}} celebrates Pride with authenticity',
+                            '{{topic}} joins the rainbow in Pride Month celebrations',
+                            'Pride vibes with {{topic}} - celebrating diversity and inclusion',
+                            'Standing proud with {{topic}} this Pride Month',
+                            '{{topic}} supports love, equality, and Pride celebration'
+                        ],
+                        emojis: ['🏳️‍🌈', '❤️', '💛', '💚', '💙', '💜'],
+                        hashtags: ['#Pride', '#PrideMonth', '#LoveIsLove', '#LGBTQ', '#PrideCelebration'],
+                        imageKeywords: 'pride month celebration, rainbow pride, LGBTQ support, diversity inclusion'
+                    }
+                };
+                
+                return festivals[festival] || null;
+            }
+
+            createCaptionPrompt(topic, category, options) {
+                const { includeHashtags, includeEmojis, includeCTA, viralMode, isRegeneration, regenerationCount } = options;
+                const festival = document.getElementById('festivalSelect').value;
+                
+                const timestamp = Date.now();
+                const randomSeed = Math.floor(Math.random() * 100000);
+                
+                let prompt = `CONTENT GENERATION REQUEST\nTimestamp: ${timestamp}\nSeed: ${randomSeed}\n\n`;
+                
+                if (isRegeneration) {
+                    prompt += `REGENERATION #${regenerationCount + 1} - Create a COMPLETELY DIFFERENT caption.\n`;
+                    prompt += `CRITICAL: Must be totally unique from any previous versions.\n`;
+                }
+                
+                prompt += `TOPIC: "${topic}"\nCATEGORY: ${category}\n`;
+                
+                if (festival !== 'none') {
+                    const festivalData = this.getFestivalData(festival);
+                    if (festivalData) {
+                        prompt += `FESTIVAL: ${festival.toUpperCase()}\n`;
+                        prompt += `IMPORTANT: Incorporate festival theme naturally.\n`;
+                    }
+                }
+                
+                prompt += `\nREQUIREMENTS:\n- Length: 150-280 characters\n`;
+                prompt += `- ${includeEmojis ? 'Include emojis' : 'No emojis'}\n`;
+                prompt += `- ${includeHashtags ? 'Add 3-5 hashtags' : 'No hashtags'}\n`;
+                prompt += `- ${includeCTA ? 'Include CTA' : 'No CTA'}\n`;
+                if (viralMode) prompt += `- Use viral hooks\n`;
+                
+                prompt += `\nGenerate only the caption text.`;
+                
+                return prompt;
+            }
+
+            createImagePrompt(topic, style, category, isRegeneration) {
+                const festival = document.getElementById('festivalSelect').value;
+                const timestamp = Date.now().toString().slice(-6);
+                const randomSeed = Math.floor(Math.random() * 999999);
+                
+                const styleDesc = {
+                    'modern': 'modern contemporary design clean aesthetic',
+                    'photorealistic': 'photorealistic high quality photography professional lighting',
+                    'artistic': 'artistic illustration creative digital art vibrant',
+                    'minimalist': 'minimalist design clean simple elegant',
+                    'vibrant': 'vibrant colors dynamic bold eye catching',
+                    'professional': 'corporate professional business polished',
+                    'retro': 'retro vintage nostalgic classic',
+                    'futuristic': 'futuristic sci-fi innovative modern technology'
+                };
+
+                let prompt = `${topic}, ${styleDesc[style]}`;
+                
+                if (festival !== 'none') {
+                    const festivalData = this.getFestivalData(festival);
+                    if (festivalData) {
+                        prompt += `, ${festivalData.imageKeywords}`;
+                    }
+                }
+                
+                if (isRegeneration) {
+                    const variations = ['different angle', 'alternative lighting', 'unique perspective', 'fresh composition', 'new viewpoint'];
+                    prompt += `, ${variations[Math.floor(Math.random() * variations.length)]}`;
+                }
+                
+                prompt += `, professional quality, 4k, detailed, seed_${randomSeed}_time_${timestamp}`;
+                
+                return prompt;
+            }
+
+            async generateCaption(isRegeneration = false) {
+                const topic = document.getElementById('contentTopic').value.trim();
+                
+                if (!topic) {
+                    this.showError('Please enter your content topic first!');
+                    return;
+                }
+
+                if (this.isGeneratingCaption) return;
+                this.setCaptionGeneratingState(true);
+                this.hideError();
+                
+                try {
+                    const startTime = Date.now();
+                    const category = document.getElementById('categorySelect').value;
+                    const includeHashtags = document.getElementById('includeHashtags').checked;
+                    const includeEmojis = document.getElementById('includeEmojis').checked;
+                    const includeCTA = document.getElementById('includeCTA').checked;
+                    const viralMode = document.getElementById('viralMode').checked;
+
+                    let caption;
+                    
+                    try {
+                        const prompt = this.createCaptionPrompt(topic, category, {
+                            includeHashtags, includeEmojis, includeCTA, viralMode,
+                            isRegeneration, regenerationCount: this.regenerationCount
+                        });
+                        caption = await this.callGeminiAPI(prompt);
+                    } catch (apiError) {
+                        caption = this.generateFestivalFallback(topic, category, {
+                            includeHashtags, includeEmojis, includeCTA, viralMode
+                        }, isRegeneration);
+                        this.showApiWarning();
+                    }
+                    
+                    this.displayCaption(caption, Date.now() - startTime);
+                    this.currentCaption = caption;
+                    
+                    if (isRegeneration) this.regenerationCount++;
+                    else this.generationCount++;
+                    
+                    this.showSuccess(isRegeneration ? 'Fresh caption regenerated!' : 'Caption generated!');
+                    document.getElementById('welcomeScreen').classList.add('hidden');
+
+                } catch (error) {
+                    this.showError(`Caption generation failed: ${error.message}`);
+                } finally {
+                    this.setCaptionGeneratingState(false);
+                }
+            }
+
+            generateFestivalFallback(topic, category, options, isRegeneration) {
+                const { includeHashtags, includeEmojis, includeCTA, viralMode } = options;
+                const festival = document.getElementById('festivalSelect').value;
+                const festivalData = this.getFestivalData(festival);
+                
+                let caption = '';
+                
+                if (festival !== 'none' && festivalData) {
+                    // Use festival-specific templates
+                    const templates = festivalData.templates;
+                    let templateIndex;
+                    
+                    if (isRegeneration) {
+                        // For regeneration, ensure we pick a different template
+                        const availableIndices = templates.map((_, i) => i).filter(i => !this.usedTemplateIndices.has(i));
+                        if (availableIndices.length === 0) {
+                            this.usedTemplateIndices.clear();
+                            templateIndex = Math.floor(Math.random() * templates.length);
+                        } else {
+                            templateIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+                        }
+                        this.usedTemplateIndices.add(templateIndex);
+                    } else {
+                        this.usedTemplateIndices.clear();
+                        templateIndex = Math.floor(Math.random() * templates.length);
+                        this.usedTemplateIndices.add(templateIndex);
+                    }
+                    
+                    caption = templates[templateIndex].replace('{{topic}}', topic);
+                } else {
+                    // Regular fallback for non-festival content
+                    const regularTemplates = [
+                        `${topic} brought unexpected insights today`,
+                        `Experiencing ${topic} reminded me why this matters`,
+                        `${topic} perfectly captures what I value`,
+                        `${topic} changed my perspective completely`,
+                        `Discovering ${topic} was a game changer`,
+                        `${topic} exceeded every single expectation`
+                    ];
+                    const index = isRegeneration ? 
+                        (Date.now() % regularTemplates.length) : 
+                        Math.floor(Math.random() * regularTemplates.length);
+                    caption = regularTemplates[index];
+                }
+                
+                if (viralMode) {
+                    const hooks = ['Plot twist:', 'This changed everything:', 'Nobody talks about this:', 'Hot take:'];
+                    caption = `${hooks[Math.floor(Math.random() * hooks.length)]} ${caption.toLowerCase()}`;
+                }
+                
+                if (includeCTA) {
+                    const ctas = ['What\'s your take?', 'Share your thoughts!', 'Who else agrees?', 'Let\'s discuss!'];
+                    caption += ` ${ctas[Math.floor(Math.random() * ctas.length)]}`;
+                }
+                
+                if (includeEmojis) {
+                    let emojis = ['✨', '💫', '🌟'];
+                    if (festival !== 'none' && festivalData) {
+                        emojis = festivalData.emojis.slice(0, 2);
+                    }
+                    caption = `${emojis[0]} ${caption} ${emojis[emojis.length - 1]}`;
+                }
+                
+                if (includeHashtags) {
+                    let hashtags = ['#inspiration', '#growth'];
+                    if (festival !== 'none' && festivalData) {
+                        hashtags = festivalData.hashtags.slice(0, 3 + Math.floor(Math.random() * 2));
+                    }
+                    caption += ` ${hashtags.join(' ')}`;
+                }
+                
+                return caption;
+            }
+
+            async generateImage(isRegeneration = false) {
+                const topic = document.getElementById('contentTopic').value.trim();
+                
+                if (!topic) {
+                    this.showError('Please enter your content topic first!');
+                    return;
+                }
+
+                if (this.isGeneratingImage) return;
+                this.setImageGeneratingState(true);
+                this.hideError();
+                
+                try {
+                    const startTime = Date.now();
+                    const style = document.getElementById('visualStyle').value;
+                    const category = document.getElementById('categorySelect').value;
+                    
+                    const imagePrompt = this.createImagePrompt(topic, style, category, isRegeneration);
+                    const imageUrl = await this.generateImageFromPrompt(imagePrompt);
+                    
+                    this.displayImage(imageUrl, Date.now() - startTime);
+                    this.currentImageUrl = imageUrl;
+                    
+                    if (isRegeneration) this.regenerationCount++;
+                    else this.generationCount++;
+                    
+                    this.showSuccess(isRegeneration ? 'Fresh image regenerated!' : 'Image generated!');
+                    document.getElementById('welcomeScreen').classList.add('hidden');
+
+                } catch (error) {
+                    this.showError(`Image generation failed: ${error.message}`);
+                } finally {
+                    this.setImageGeneratingState(false);
+                }
+            }
+
+            async generateBoth() {
+                const topic = document.getElementById('contentTopic').value.trim();
+                
+                if (!topic) {
+                    this.showError('Please enter your content topic first!');
+                    return;
+                }
+
+                if (this.isGeneratingBoth) return;
+                this.setBothGeneratingState(true);
+                this.hideError();
+                
+                try {
+                    const [captionResult, imageResult] = await Promise.allSettled([
+                        this.generateCaptionOnly(),
+                        this.generateImageOnly()
+                    ]);
+                    
+                    let successCount = 0;
+                    if (captionResult.status === 'fulfilled') successCount++;
+                    if (imageResult.status === 'fulfilled') successCount++;
+                    
+                    if (successCount > 0) {
+                        this.generationCount++;
+                        this.showSuccess('Content generated successfully!');
+                        document.getElementById('welcomeScreen').classList.add('hidden');
+                    } else {
+                        this.showError('Generation failed. Please try again.');
+                    }
+
+                } catch (error) {
+                    this.showError('Generation failed. Please try again.');
+                } finally {
+                    this.setBothGeneratingState(false);
+                }
+            }
+
+            async generateCaptionOnly() {
+                const topic = document.getElementById('contentTopic').value.trim();
+                const category = document.getElementById('categorySelect').value;
+                const includeHashtags = document.getElementById('includeHashtags').checked;
+                const includeEmojis = document.getElementById('includeEmojis').checked;
+                const includeCTA = document.getElementById('includeCTA').checked;
+                const viralMode = document.getElementById('viralMode').checked;
+
+                const startTime = Date.now();
+                let caption;
+                
+                try {
+                    const prompt = this.createCaptionPrompt(topic, category, {
+                        includeHashtags, includeEmojis, includeCTA, viralMode,
+                        isRegeneration: false, regenerationCount: this.regenerationCount
+                    });
+                    caption = await this.callGeminiAPI(prompt);
+                } catch (error) {
+                    caption = this.generateFestivalFallback(topic, category, {
+                        includeHashtags, includeEmojis, includeCTA, viralMode
+                    }, false);
+                }
+                
+                this.displayCaption(caption, Date.now() - startTime);
+                this.currentCaption = caption;
+                return caption;
+            }
+
+            async generateImageOnly() {
+                const topic = document.getElementById('contentTopic').value.trim();
+                const style = document.getElementById('visualStyle').value;
+                const category = document.getElementById('categorySelect').value;
+                
+                const startTime = Date.now();
+                const imagePrompt = this.createImagePrompt(topic, style, category, false);
+                const imageUrl = await this.generateImageFromPrompt(imagePrompt);
+                
+                this.displayImage(imageUrl, Date.now() - startTime);
+                this.currentImageUrl = imageUrl;
+                return imageUrl;
+            }
+
+            async callGeminiAPI(prompt) {
+                const requestBody = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: { temperature: 0.9, maxOutputTokens: 512 }
+                };
+
+                const models = ['gemini-1.5-flash', 'gemini-1.5-pro'];
+                
+                for (const model of models) {
+                    try {
+                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${this.apiKey}`;
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(requestBody)
+                        });
+
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                                return data.candidates[0].content.parts[0].text.trim();
+                            }
+                        }
+                    } catch (e) {}
+                    await new Promise(r => setTimeout(r, 500));
+                }
+                throw new Error('API_FAILED');
+            }
+
+            async generateImageFromPrompt(prompt) {
+                const cleanPrompt = prompt.replace(/[^a-zA-Z0-9\s,.-_]/g, '').trim();
+                const encodedPrompt = encodeURIComponent(cleanPrompt);
+                const imageUrl = `${this.imageApiBase}${encodedPrompt}?width=1024&height=1024&enhance=true&nologo=true&seed=${Date.now()}`;
+                await this.verifyImageLoad(imageUrl);
+                return imageUrl;
+            }
+
+            async verifyImageLoad(url) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = () => resolve(url);
+                    img.onerror = () => reject(new Error('Image load failed'));
+                    img.src = url;
+                    setTimeout(() => reject(new Error('Timeout')), 15000);
+                });
+            }
+
+            displayCaption(caption, time) {
+                document.getElementById('captionPanel').classList.remove('hidden');
+                document.getElementById('captionContent').textContent = caption;
+                document.getElementById('captionStats').textContent = `${caption.length} characters`;
+                document.getElementById('captionTime').textContent = `Generated in ${(time/1000).toFixed(1)}s`;
+            }
+
+            displayImage(imageUrl, time) {
+                document.getElementById('imagePanel').classList.remove('hidden');
+                document.getElementById('imagePlaceholder').classList.add('hidden');
+                const img = document.getElementById('generatedImage');
+                img.classList.remove('hidden');
+                img.src = imageUrl;
+                document.getElementById('imageStats').textContent = 'Image ready';
+                document.getElementById('imageTime').textContent = `Generated in ${(time/1000).toFixed(1)}s`;
+            }
+
+            async copyCaption() {
+                if (!this.currentCaption) return;
+                try {
+                    await navigator.clipboard.writeText(this.currentCaption);
+                    this.showSuccess('Copied to clipboard!');
+                } catch (e) {
+                    this.showSuccess('Caption copied!');
+                }
+            }
+
+            downloadImage() {
+                if (!this.currentImageUrl) return;
+                const link = document.createElement('a');
+                link.href = this.currentImageUrl;
+                link.download = `bid-festival-${Date.now()}.jpg`;
+                link.click();
+                this.showSuccess('Download started!');
+            }
+
+            setQuickTopic(type) {
+                const topics = {
+                    gaming: 'Epic multiplayer victory in ranked match',
+                    tech: 'AI breakthrough revolutionizing daily work',
+                    business: 'Strategic pivot transformed company trajectory'
+                };
+                document.getElementById('contentTopic').value = topics[type];
+                document.getElementById('categorySelect').value = type === 'tech' ? 'technology' : type;
+                document.getElementById('contentTopic').dispatchEvent(new Event('input'));
+            }
+
+            setCaptionGeneratingState(isGenerating) {
+                this.isGeneratingCaption = isGenerating;
+                document.getElementById('generateCaptionBtn').disabled = isGenerating;
+                document.getElementById('captionBtnText').textContent = isGenerating ? 'Generating...' : 'Generate Caption';
+                document.getElementById('captionSpinner').classList.toggle('hidden', !isGenerating);
+            }
+
+            setImageGeneratingState(isGenerating) {
+                this.isGeneratingImage = isGenerating;
+                document.getElementById('generateImageBtn').disabled = isGenerating;
+                document.getElementById('imageBtnText').textContent = isGenerating ? 'Generating...' : 'Generate Image';
+                document.getElementById('imageSpinner').classList.toggle('hidden', !isGenerating);
+            }
+
+            setBothGeneratingState(isGenerating) {
+                this.isGeneratingBoth = isGenerating;
+                document.getElementById('generateBothBtn').disabled = isGenerating;
+                document.getElementById('bothBtnText').textContent = isGenerating ? 'Generating...' : 'Generate Both';
+                document.getElementById('bothSpinner').classList.toggle('hidden', !isGenerating);
+            }
+
+            showError(message) {
+                document.getElementById('errorMessage').textContent = message;
+                document.getElementById('errorDisplay').classList.remove('hidden');
+                setTimeout(() => document.getElementById('errorDisplay').classList.add('hidden'), 8000);
+            }
+
+            hideError() {
+                document.getElementById('errorDisplay').classList.add('hidden');
+            }
+
+            showSuccess(message) {
+                this.createToast(message, 'success');
+            }
+
+            showApiWarning() {
+                this.createToast('Using intelligent content generator', 'warning');
+            }
+
+            showWelcomeMessage() {
+                setTimeout(() => this.createToast('Welcome to BiD Content Generator!', 'info'), 1000);
+            }
+
+            createToast(message, type = 'success') {
+                const colors = {
+                    success: 'from-green-500 to-emerald-600',
+                    error: 'from-red-500 to-red-600',
+                    info: 'from-blue-500 to-purple-600',
+                    warning: 'from-yellow-500 to-orange-600'
+                };
+                
+                const toast = document.createElement('div');
+                toast.className = `bg-gradient-to-r ${colors[type]} text-white px-6 py-4 rounded-2xl shadow-2xl transform transition-all duration-300 translate-x-full font-medium max-w-sm`;
+                toast.textContent = message;
+                
+                document.getElementById('toastContainer').appendChild(toast);
+                setTimeout(() => toast.classList.remove('translate-x-full'), 100);
+                setTimeout(() => {
+                    toast.classList.add('translate-x-full');
+                    setTimeout(() => toast.remove(), 300);
+                }, 4000);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.bidGenerator = new BiDContentGenerator();
+        });
+    </script>
+</body>
+</html>
